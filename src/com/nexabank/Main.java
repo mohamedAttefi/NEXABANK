@@ -22,8 +22,8 @@ public class Main {
         loginService.ajouterUtilisateur(client1);
         loginService.ajouterUtilisateur(g1);
 
-        compteService.creerCompte(client1, "C" + (++Compte.cpt), 1000.0, TypeCompte.COURANT);
-        compteService.creerCompte(client1, "C" + (++Compte.cpt), 500.0, TypeCompte.EPARGNE);
+        compteService.creerCompte(client1, 1000.0, TypeCompte.COURANT);
+        compteService.creerCompte(client1, 500.0, TypeCompte.EPARGNE);
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("=== BIENVENUE SUR NEXABANK ===");
@@ -68,7 +68,7 @@ public class Main {
 
                 Client newClient = new Client(Client.count, nom, prenom, email, pass);
 
-                loginService.ajouterUtilisateur(g1);
+                loginService.ajouterUtilisateur(newClient);
                 menuClient(newClient, transactionService, scanner);
             }
         }
@@ -91,8 +91,7 @@ public class Main {
             try {
                 switch (c) {
                     case 1:
-                        client.getComptes().forEach((num, compte) ->
-                                System.out.println("Compte: " + num + " | Type: " + compte.getTypeCompte() + " | Solde: " + compte.getSolde() + " €"));
+                        client.getComptes().forEach((num, compte) -> System.out.println("Compte: " + num + " | Type: " + compte.getTypeCompte() + " | Solde: " + compte.getSolde() + " €"));
                         break;
                     case 2:
                         System.out.print("N° de compte : ");
@@ -155,18 +154,24 @@ public class Main {
                         int id = sc.nextInt();
                         Client cl = cs.trouverParId(id);
                         if (cl != null) {
-                            System.out.print("Nouveau N° de compte : ");
-                            String num = sc.next();
                             System.out.print("Solde initial : ");
                             double s = sc.nextDouble();
-                            compS.creerCompte(cl, num, s, TypeCompte.COURANT);
+                            System.out.println("Type de compte : \n");
+                            System.out.println("1.COURANT");
+                            System.out.println("2.EPARGNE");
+                            System.out.print("Your choice : ");
+                            int ct = sc.nextInt();
+                            if (ct == 1) compS.creerCompte(cl, s, TypeCompte.COURANT);
+                            if (ct == 2) compS.creerCompte(cl, s, TypeCompte.EPARGNE);
                             System.out.println("Compte créé !");
                         } else System.out.println("Client introuvable.");
                         break;
                     case 2:
+                        cs.afficherClients();
                         System.out.print("ID Client : ");
                         int idCl = sc.nextInt();
                         Client client = cs.trouverParId(idCl);
+                        client.getComptes().forEach((num, compte) -> System.out.println("Compte: " + num + " | Type: " + compte.getTypeCompte() + " | Solde: " + compte.getSolde() + " €"));
                         if (client != null) {
                             System.out.print("N° de compte à fermer : ");
                             String num = sc.next();
@@ -175,6 +180,11 @@ public class Main {
                         }
                         break;
                     case 3:
+                        cs.afficherClients();
+                        System.out.print("ID Client : ");
+                        int idClient = sc.nextInt();
+                        Client copmpteClient = cs.trouverParId(idClient);
+                        copmpteClient   .getComptes().forEach((num, compte) -> System.out.println("Compte: " + num + " | Type: " + compte.getTypeCompte() + " | Solde: " + compte.getSolde() + " €"));
                         System.out.print("N° de compte : ");
                         String num = sc.next();
                         ts.afficherReleveFichier(num);

@@ -3,16 +3,16 @@ package com.nexabank.model;
 import java.util.HashSet;
 
 public class Compte {
-    public   static int cpt = 1000;
+    public  static int cpt = 1000;
     private String numeroCompte;
     private double solde;
     private TypeCompte typeCompte;
 
     private HashSet<Transaction> historiqueTransactions;
 
-    public Compte(String numeroCompte, double solde, TypeCompte typeCompte) {
+    public Compte(double solde, TypeCompte typeCompte) {
 
-        this.numeroCompte = numeroCompte;
+        this.numeroCompte = "C"+(++Compte.cpt);
         this.solde = solde;
         this.typeCompte = typeCompte;
 

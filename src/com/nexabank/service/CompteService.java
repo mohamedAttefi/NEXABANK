@@ -8,9 +8,9 @@ import com.nexabank.model.TypeCompte;
 
 public class CompteService {
 
-    public Compte creerCompte(Client client, String numeroCompte, double soldeInitial, TypeCompte type) {
-        Compte nouveauCompte = new Compte(numeroCompte, soldeInitial, type);
-        client.getComptes().put(numeroCompte, nouveauCompte);
+    public Compte creerCompte(Client client, double soldeInitial, TypeCompte type) {
+        Compte nouveauCompte = new Compte(soldeInitial, type);
+        client.getComptes().put(nouveauCompte.getNumeroCompte(), nouveauCompte);
         return nouveauCompte;
     }
 

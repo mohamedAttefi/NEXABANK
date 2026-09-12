@@ -25,7 +25,7 @@ public class ClientService {
     }
 
     public Client trouverParId(int idClient) {
-        return (Client) clientsDb.get(idClient);
+        return (Client) clientsDb.get(idClient-1);
     }
 
     public void mettreAJourInfos(int idClient, String nouveauNom, String nouveauPrenom, String nouveauEmail) {
